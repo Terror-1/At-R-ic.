@@ -1,5 +1,9 @@
-﻿USE Milestone2
+﻿--procedures--
+USE Milestone2
 GO
+
+--1 As an unregistered user I should be able to:--
+
 CREATE PROC StudentRegister
 @first_name VARCHAR(20),
 @last_name VARCHAR(20),
@@ -22,7 +26,6 @@ INSERT INTO GucianStudent (id,firstName,lastName,faculty,address) VALUES(@ID,@fi
 ELSE 
 INSERT INTO NonGucianStudent (id,firstName,lastName,faculty,address) VALUES(@ID,@first_name,@last_name,@faculty,@address)
 
---drop proc StudentRegister--
 GO
 CREATE PROC SupervisorRegister
 @first_name VARCHAR(20),
@@ -42,6 +45,7 @@ WHERE PGU.email=@email AND PGU.password=@password
 INSERT INTO Supervisor (id,Name,faculty) VALUES(@ID,@first_name+@last_name,@faculty)
 
 GO
+--2 As any registered User I should be able to:--
 CREATE PROC userLogin
 @ID INT,
 @password VARCHAR(20),
@@ -71,6 +75,7 @@ else
 print 'id not correct'
 
 GO
+--3 As an admin I should be able to:--
 
 create proc AdminListSup 
 as 
@@ -99,12 +104,13 @@ create proc AdminViewOnGoingTheses
 as
 select @thesesCount= count (*)
 from Thesis 
+print @thesesCount 
 
 Go
 
 create proc AdminViewStudentThesisBySupervisor
 as 
-select Su.name , t.title , s.firstName+s.lastName as Student_name 
+select Su.name as supervisor_name , t.title , s.firstName+s.lastName as Student_name 
 from GUCianProgressReport GPR inner join GucianStudent s on GPR.sid = s.id 
 inner join Thesis t on GPR.thesisSerialNumber = t.serialNumber 
 inner join Supervisor Su on GPR.supid = Su.id 
@@ -141,26 +147,21 @@ create proc AdminIssueThesisPayment
 @fundPercentage decimal (3,2),
 @Sucess Bit output 
 as 
-Declare @id int 
-select @id = T.payment_id
-from Thesis T
-where T.serialNumber = @ThesisSerialNo
-
-if @id =0
-begin
-set @Sucess = 0
-print 'warnning' 
-end 
-
+if exists(select * from Thesis where serialNumber = @ThesisSerialNo )
+BEGIN
+insert into Payment (amount ,no_installments,fundPercentage)values (@amount , @noOfInstallments , @fundPercentage)
+Declare @temp int 
+select @temp= id from Payment where id = @@IDENTITY
+update Thesis set payment_id = @temp 
+where serialNumber = @ThesisSerialNo
+set @Sucess = '1'
+print @Succes
+END
 else 
-begin
-set @Sucess = 1
-update Payment set amount = @amount , no_installments = @noOfInstallments , fundPercentage =@fundPercentage 
-where id=@id
-end 
-
-print @Sucess 
-
+BEGIN
+set @Sucess='0'
+print @Sucess
+END
 Go
 
 create proc AdminViewStudentProfile 
@@ -244,21 +245,38 @@ go
 create proc ViewExamSupDefense
 @defenseDate datetime
 as
-select e.name
-from Examiner e inner join ExaminerEvaluateDefense ed on e.id=ed.examinerId
-where @defenseDate=ed.date
+select E.name 
+from Defense D inner join ExaminerEvaluateDefense EED on( D.date = EED.date and D.serialNumber = EED.serialNo)
+inner join Examiner E on EED.examinerId = E.id
+where D.date = @defenseDate
+UNION
+select sup.name 
+from Defense D inner join Thesis T on D.serialNumber = T.serialNumber 
+inner join GUCianStudentRegisterThesis S on T.serialNumber = S.serial_no 
+inner join Supervisor sup on S.supid =sup.id
+where D.date = @defenseDate 
+UNION
+select sup.name 
+from Defense D inner join Thesis T on D.serialNumber = T.serialNumber 
+inner join NonGUCianStudentRegisterThesis S on T.serialNumber = S.serial_no 
+inner join Supervisor sup on S.supid =sup.id
+where D.date = @defenseDate 
 union
-select s.name
-from Supervisor s inner join GUCianStudentRegisterThesis gt on s.id=gt.supid
-inner join Thesis t on t.serialNumber=gt.serial_no
-where @defenseDate=t.defenseDate
-union
-select s.name
-from Supervisor s inner join NonGucianStudentTakeCourse gt on s.id=gt.supid
-inner join Thesis t on t.serialNumber=gt.serial_no
-where @defenseDate=t.defenseDate
+select D.date
+from Defense D inner join ExaminerEvaluateDefense EED on( D.date = EED.date and D.serialNumber = EED.serialNo)
+inner join Examiner E on EED.examinerId = E.id
+where D.date = @defenseDate
+UNION
+select D.location as place 
+from Defense D inner join ExaminerEvaluateDefense EED on( D.date = EED.date and D.serialNumber = EED.serialNo)
+inner join Examiner E on EED.examinerId = E.id
+where D.date = @defenseDate
 
 go
+
+
+--4 As a supervisor I am able to :--
+
 create proc EvaluateProgressReport
 @supervisorID int,
 @thesisSerialNo int,
@@ -415,7 +433,7 @@ set grade =@ggrade
 where serialNumber = @ThesisSerialNo
 
 go
-
+--5 As an examiner I should be able to:--
 create proc AddDefenseGrade 
 @ThesisSerialNo int , @DefenseDate Datetime , @grade decimal(3,2)
 as 
@@ -431,7 +449,7 @@ update ExaminerEvaluateDefense set comment = @comments
 where serialNo=@ThesisSerialNo and date = @DefenseDate and examinerId = @Examiner_id 
 
 go
-
+--6 As a registered student I should be able to:--
 create proc viewMyProfile
 @studentId int
 as 

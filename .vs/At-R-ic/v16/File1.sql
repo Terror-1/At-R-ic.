@@ -1,4 +1,5 @@
-﻿CREATE Database Milestone2
+﻿--table creations--
+CREATE Database Milestone2
 GO
 USE Milestone2
 CREATE Table PostGradUser
@@ -18,7 +19,7 @@ CREATE Table GucianStudent(
     id INT PRIMARY KEY,
     firstName VARCHAR(20),
     lastName VARCHAR(20),
-    type BIT,
+    type varchar(10),
     faculty VARCHAR(20),
     address VARCHAR(50),
     GPA DECIMAL(3,2), 
@@ -30,7 +31,7 @@ CREATE Table NonGucianStudent(
     id INT PRIMARY KEY,
     firstName VARCHAR(20),
     lastName VARCHAR(20),
-    type BIT,
+    type varchar(10),
     faculty VARCHAR(20),
     address VARCHAR(50),
     GPA DECIMAL(3,2),
@@ -39,14 +40,14 @@ CREATE Table NonGucianStudent(
 
 CREATE Table GUCStudentPhoneNumber(
     id INT  ,
-    phone VARCHAR(18) ,
+    phone VARCHAR(20) ,
     PRIMARY KEY(id, phone), 
     FOREIGN KEY (id) REFERENCES GucianStudent ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 CREATE Table NonGUCStudentPhoneNumber(
     id INT,
-    phone VARCHAR(18),
+    phone VARCHAR(20),
     PRIMARY KEY(id, phone), 
     FOREIGN KEY (id) REFERENCES NonGucianStudent ON DELETE CASCADE ON UPDATE CASCADE
 );    
@@ -56,11 +57,11 @@ CREATE TABLE Course(
     id INT PRIMARY KEY IDENTITY ,
     fees INT,
     creditHours INT,
-    code VARCHAR(8)
+    code VARCHAR(10)
 );
 
 CREATE TABLE Payment(
-    id INT PRIMARY KEY IDENTITY,
+    id INT PRIMARY KEY Identity ,
     amount DECIMAL(10,2),
     no_installments INT,
     fundPercentage DECIMAL(3,2)
@@ -74,7 +75,7 @@ CREATE TABLE Supervisor(
 );
 
 CREATE TABLE Thesis(
-    serialNumber INT PRIMARY KEY IDENTITY,
+    serialNumber INT PRIMARY KEY identity ,
     field VARCHAR(20), 
     type VARCHAR(20), 
     title VARCHAR(20), 
@@ -83,9 +84,9 @@ CREATE TABLE Thesis(
     defenseDate DATETIME, 
     years AS (YEAR(endDATE)-YEAR(startDATE)), 
     grade DECIMAL(3,2), 
-    payment_id INT,
+    payment_id INT unique,
     noExtension INT,
-    FOREIGN KEY (payment_id) REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (payment_id)  REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Publication(

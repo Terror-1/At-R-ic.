@@ -22,7 +22,7 @@ CREATE Table GucianStudent(
     faculty VARCHAR(20),
     address VARCHAR(50),
     GPA DECIMAL(3,2), 
-    undergradID INT IDENTITY,
+    undergradID INT ,
     FOREIGN KEY(id) REFERENCES PostGradUser ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -90,18 +90,18 @@ CREATE TABLE Thesis(
 
 CREATE TABLE Publication(
     id INT PRIMARY KEY IDENTITY,
-    title VARCHAR(30),
+    title VARCHAR(50),
     date DATETIME,
-    place VARCHAR(15),
+    place VARCHAR(50),
     accepted BIT,
-    host VARCHAR(20)
+    host VARCHAR(50)
 );
 
 
 CREATE TABLE Examiner(
     id INT PRIMARY KEY ,
     name VARCHAR(20),
-    fieldofwork VARCHAR(15),
+    fieldofwork VARCHAR(20),
     isNational BIT,
     FOREIGN KEY(id) REFERENCES PostGradUser ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -117,12 +117,13 @@ CREATE TABLE Defense (
 
 CREATE TABLE GUCianProgressReport(
     sid INT ,
-    no INT ,
+    no INT Default 0,
     date DATETIME,
     eval INT,
     state INT,
     thesisSerialNumber INT,
     supid INT,
+    description varchar(500),
     PRIMARY KEY(sid,no),
     FOREIGN KEY (sid) REFERENCES GucianStudent ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (thesisSerialNumber) REFERENCES Thesis ON DELETE CASCADE ON UPDATE CASCADE,
@@ -131,12 +132,13 @@ CREATE TABLE GUCianProgressReport(
 
 CREATE TABLE NonGUCianProgressReport(
     sid INT ,
-    no INT ,
+    no INT Default 0,
     date DATETIME,
     eval INT,
     state INT,
     thesisSerialNumber INT,
     supid INT,
+    description varchar(500),
     PRIMARY KEY(sid,no),
     FOREIGN KEY (sid) REFERENCES NonGucianStudent ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (thesisSerialNumber) REFERENCES Thesis ON DELETE CASCADE ON UPDATE CASCADE,

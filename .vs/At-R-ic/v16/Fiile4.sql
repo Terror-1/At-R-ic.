@@ -50,23 +50,33 @@ INSERT INTO Installment VALUES('2019/7/9',13,16500,'0')
 INSERT INTO Installment VALUES('2019/5/5',14,10000,'0')
 INSERT INTO Installment VALUES('2021/7/1',15,6000,'1')
 INSERT INTO Installment VALUES('2022/1/1',15,6000,'0')
+INSERT INTO Installment VALUES('2022/7/1',16,66700,'0')
+INSERT INTO Installment VALUES('2021/1/9',17,3000,'1')
+INSERT INTO Installment VALUES('2021/7/9',17,3000,'0')
+INSERT INTO Installment VALUES('2021/11/23',18,10000,'0')
+INSERT INTO Installment VALUES('2022/8/1',19,6000,'0')
+INSERT INTO Installment VALUES('2023/2/1',19,6000,'0')
+
+
 -----------------------------------------------------------------------------------
 --15 thesis insertions--
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Master', 'Python Bites', '2018/5/23', '2022/5/23', '2022/7/23',  2.9,1,1);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('Pharmacy', 'Master', 'BioTrends', '2019/3/1', '2022/3/1', '2022/5/1',  1.9,2,2);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('IET', 'Master', 'Arduino', '2019/4/1', '2021/12/1', '2021/12/23',  0.5,2,3);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Master', 'Javaphobics', '2020/3/1', '2022/3/1', '2022/4/1',  0.4,3,4);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('appliedArts', 'phD', 'AutoCad', '2019/5/10', '2021/5/1 ','2021/12/20', 1.25,1,5);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MET', 'Master', 'MachineLearning', '2019/4/6', '2024/4/6', '2024/5/1',  0.6,2,6);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('Pharmacy', 'Master', 'plantsDrugs ', '2018/10/10', '2022/10/10', '2022/11/1',  0.9,1,7);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('AppliedArts', 'Phd', 'Design', '2019/4/5', '2021/5/5', '2023/5/1', 2.5,1,8);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MNGMT', 'Master', 'EthicsinMNGMNT', '2021/4/9', '2023/5/1', '2023/5/10',  2.3,2,9);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'JavaHardware', '2020/5/23', '2022/12/1', '2022/1/1',  2.1,1,10);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('BI', 'Phd', 'Business in KG Ext', '2021/8/1', '2023/1/5', '2022/2/5',  1.2,2,11);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'AWS', '2018/7/5', '2021/12/12', '2022/2/2',  0.7,3,12);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'JavaHardware', '2019/1/9', '2022/3/1', '2022/5/1',  0.8,1,13);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'AI', '2019/5/5', '2024/6/1', '2024/7/1',  2.7,2,14);
-INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MNGMT', 'Master', 'Ethics_inManagement', '2021/7/1', '2024/7/7', '2024/9/1',  2.7,2,15);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Master', 'Python Bites', '2018/5/23', '2022/5/23', '2022/7/23',  40,1,1);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('Pharmacy', 'Master', 'BioTrends', '2019/3/1', '2022/3/1', '2022/5/1',  50,2,2);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('IET', 'Master', 'Arduino', '2019/4/1', '2021/12/1', '2021/12/23',  70,2,3);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Master', 'Javaphobics', '2020/3/1', '2022/3/1', '2022/4/1', 80,3,4);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('appliedArts', 'phD', 'AutoCad', '2019/5/10', '2021/5/1 ','2021/12/20', 90,1,5);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MET', 'Master', 'MachineLearning', '2019/4/6', '2024/4/6', '2024/5/1',  10,2,6);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('Pharmacy', 'Master', 'plantsDrugs ', '2018/10/10', '2022/10/10', '2022/11/1',  20,1,7);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('AppliedArts', 'Phd', 'Design', '2019/4/5', '2021/5/5', '2023/5/1', 80,1,8);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MNGMT', 'Master', 'Logestics', '2021/4/9', '2023/5/1', '2023/5/10',  100,2,9);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'JavaHardware', '2020/5/23', '2022/12/1', '2022/1/1',  70,1,10);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('BI', 'Phd', 'Business in KG Ext', '2021/8/1', '2023/1/5', '2022/2/5',  40,2,11);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'AWS', '2018/7/5', '2021/12/12', '2022/2/2',  30,3,12);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'JavaHardware', '2019/1/9', '2022/3/1', '2022/5/1', 48,1,13);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('CS', 'Phd', 'AI', '2019/5/5', '2024/6/1', '2024/7/1',  65,2,14);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,defenseDate,grade,noExtension,payment_id) VALUES ('MNGMT', 'Master', 'Ethics_inManagement', '2021/7/1', '2024/7/7', '2024/9/1', 78,2,15);
+INSERT INTO Thesis (field,type ,title ,startDate,endDate,noExtension) VALUES ('IET', 'Master', 'EthicalHacking', '2021/7/1', '2024/7/7',0);
+insert into Thesis (field) values ('hacking');
 -----------------------------------------------------------------------
 --13 user--
 --4-Gucians--
@@ -122,6 +132,7 @@ insert into GUCianStudentRegisterThesis values (1,11,1)
 insert into GUCianStudentRegisterThesis values (2,12,8)
 insert into GUCianStudentRegisterThesis values (3,9,4)
 insert into GUCianStudentRegisterThesis values (4,10,2)
+----
 insert into GUCianStudentRegisterThesis values (1,9,3)
 insert into GUCianStudentRegisterThesis values (2,12,5)
 insert into GUCianStudentRegisterThesis values (3,9,6)
@@ -139,7 +150,7 @@ insert into NonGUCianStudentRegisterThesis values (8,11,11)
 insert into NonGUCianStudentRegisterThesis values (5,13,9)
 insert into NonGUCianStudentRegisterThesis values (6,9,12)
 insert into NonGUCianStudentRegisterThesis values (7,9,14)
-
+insert into NonGUCianStudentRegisterThesis values (5,13,17)
 ------------------------------------------------------------
 --Courses--
 INSERT INTO Course VALUES(6000,6,'CSEN502')
@@ -147,10 +158,10 @@ INSERT INTO Course VALUES(7000,6,'MNGMNT2')
 INSERT INTO Course VALUES(8000,4,'CSEN301')
 INSERT INTO Course VALUES(4000,4,'CSEN501')
 
-INSERT INTO NonGucianStudentTakeCourse VALUES(5,2,2.6)
-INSERT INTO NonGucianStudentTakeCourse VALUES(6,1,3.2)
-INSERT INTO NonGucianStudentTakeCourse VALUES(7,3,1.5)
-INSERT INTO NonGucianStudentTakeCourse VALUES(8,4,3.3)
+INSERT INTO NonGucianStudentTakeCourse VALUES(5,2,80)
+INSERT INTO NonGucianStudentTakeCourse VALUES(6,1,70)
+INSERT INTO NonGucianStudentTakeCourse VALUES(7,3,40)
+INSERT INTO NonGucianStudentTakeCourse VALUES(8,4,10)
 
 
 insert into NonGucianStudentPayForCourse values (5,16,2)
@@ -161,25 +172,25 @@ insert into NonGucianStudentPayForCourse values (8,19,4)
 
 --Defences and Examiners attending ---
 
-INSERT INTO Defense VALUES(1, '2022/7/23', 'C3.108', 4.3)
-INSERT INTO Defense VALUES(2, '2022/5/1', 'H5', 1.2)
-INSERT INTO Defense VALUES(3, '2021/12/23', 'H14', 3.2)
-INSERT INTO Defense VALUES(4, '2022/4/1', 'H3', 2.4)
-INSERT INTO Defense VALUES(5, '2021/12/20', 'C7.305', 3.1)
-INSERT INTO Defense VALUES(6, '2024/5/1', 'H12', 2.1)
-INSERT INTO Defense VALUES(7, '2022/11/1', 'H11', 4.2)
-INSERT INTO Defense VALUES(8, '2023/5/1', 'D4.302', 3.2)
-INSERT INTO Defense VALUES(9, '2023/5/10', 'H5', 5.2)
-INSERT INTO Defense VALUES(10, '2022/1/1', 'H9', 2.1)
-INSERT INTO Defense VALUES(11, '2022/2/5', 'H12', 2.5)
-INSERT INTO Defense VALUES(12, '2022/2/2', 'C7.305', 3.7)
-INSERT INTO Defense VALUES(13, '2022/5/1', 'H9', 4.1)
-INSERT INTO Defense VALUES(14, '2024/7/1', 'H7', 3.4)
-INSERT INTO Defense VALUES(15, '2024/9/1', 'H17', 4.3)
+INSERT INTO Defense VALUES(1, '2022/7/23', 'C3.108', 60)
+INSERT INTO Defense VALUES(2, '2022/2/1', 'H5', 40)
+INSERT INTO Defense VALUES(3, '2021/12/23', 'H14', 30)
+INSERT INTO Defense VALUES(4, '2022/4/1', 'H3', 67)
+INSERT INTO Defense VALUES(5, '2021/12/20', 'C7.305', 11)
+INSERT INTO Defense VALUES(6, '2024/5/1', 'H12', 100)
+INSERT INTO Defense VALUES(7, '2022/11/1', 'H11', 99)
+INSERT INTO Defense VALUES(8, '2023/5/1', 'D4.302', 85)
+INSERT INTO Defense VALUES(9, '2023/5/10', 'H5', 66)
+INSERT INTO Defense VALUES(10, '2022/1/1', 'H9', 30)
+INSERT INTO Defense VALUES(11, '2022/2/5', 'H12', 45)
+INSERT INTO Defense VALUES(12, '2022/2/2', 'C7.305', 25)
+INSERT INTO Defense VALUES(13, '2022/5/1', 'H9', 20)
+INSERT INTO Defense VALUES(14, '2024/7/1', 'H7', 44)
+INSERT INTO Defense VALUES(15, '2024/9/1', 'H17', 97)
 
 
 Insert INTO ExaminerEvaluateDefense VALUES('2022/7/23',1,18,'Good')
-Insert INTO ExaminerEvaluateDefense VALUES('2022/5/1',2,15,'Good')
+Insert INTO ExaminerEvaluateDefense VALUES('2022/2/1',2,15,'Good')
 Insert INTO ExaminerEvaluateDefense VALUES('2021/12/23',3,14,'Okay')
 Insert INTO ExaminerEvaluateDefense VALUES('2022/4/1',4,18,'Perfect')
 Insert INTO ExaminerEvaluateDefense VALUES('2021/12/20',5,17,'Perfect')
@@ -193,3 +204,16 @@ Insert INTO ExaminerEvaluateDefense VALUES('2022/2/2',12,15,'Good')
 Insert INTO ExaminerEvaluateDefense VALUES('2022/5/1',13,14,'Okay')
 Insert INTO ExaminerEvaluateDefense VALUES('2024/7/1',14,18,'Perfect')
 Insert INTO ExaminerEvaluateDefense VALUES('2024/9/1',15,17,'Perfect')
+---------------
+--publications--
+insert into Publication values ('phythonBites' ,'2021/9/23','H14','1','German university in Cairo')
+insert into publication values ('Biotrends' , '2021/7/1' ,'ALTS' ,'0', 'The american literary association')
+insert into publication values ('ethicalhacking', ' 2022/1/1', 'AUC','1','flibbingBook')
+insert into Publication values ('AI USING python' , '2021/11/23','AIN shamns University','1','AISC')
+insert into ThesisHasPublication values (1,4)
+insert into ThesisHasPublication values (1,1)
+insert into ThesisHasPublication values (2,2)
+insert into ThesisHasPublication values (16,3)
+
+
+

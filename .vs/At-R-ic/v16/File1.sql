@@ -5,8 +5,8 @@ USE Milestone2
 CREATE Table PostGradUser
 (
 id INT PRIMARY KEY IDENTITY,
-email varchar(50),
-password  VARCHAR(20)
+email varchar(50) not null,
+password  VARCHAR(20) not null
 );
 
 CREATE Table Admin
@@ -83,8 +83,8 @@ CREATE TABLE Thesis(
     endDate DATETIME, 
     defenseDate DATETIME, 
     years AS (YEAR(endDATE)-YEAR(startDATE)), 
-    grade DECIMAL(3,2), 
-    payment_id INT unique,
+    grade DECIMAL(5,2), 
+    payment_id INT null,
     noExtension INT,
     FOREIGN KEY (payment_id)  REFERENCES Payment ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -110,21 +110,21 @@ CREATE TABLE Examiner(
 CREATE TABLE Defense (
     serialNumber INT ,
     date DATETIME ,
-    location VARCHAR(20),
-    grade DECIMAL(3,2),
+    location VARCHAR(15),
+    grade DECIMAL(5,2),
     PRIMARY KEY(serialNumber,date),
     FOREIGN KEY (serialNumber) REFERENCES Thesis ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE GUCianProgressReport(
     sid INT ,
-    no INT Default 0,
+    no INT ,
     date DATETIME,
     eval INT,
     state INT,
     thesisSerialNumber INT,
     supid INT,
-    description varchar(500),
+    description varchar(200),
     PRIMARY KEY(sid,no),
     FOREIGN KEY (sid) REFERENCES GucianStudent ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (thesisSerialNumber) REFERENCES Thesis ON DELETE CASCADE ON UPDATE CASCADE,
@@ -133,7 +133,7 @@ CREATE TABLE GUCianProgressReport(
 
 CREATE TABLE NonGUCianProgressReport(
     sid INT ,
-    no INT Default 0,
+    no INT ,
     date DATETIME,
     eval INT,
     state INT,
@@ -168,7 +168,7 @@ CREATE TABLE NonGucianStudentPayForCourse(
 CREATE TABLE NonGucianStudentTakeCourse(
     sid INT ,
     cid INT ,
-    grade DECIMAL(3,2),
+    grade DECIMAL(5,2),
     PRIMARY KEY(sid,cid),
     FOREIGN KEY (sid) REFERENCES NonGucianStudent ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (cid) REFERENCES Course ON DELETE CASCADE ON UPDATE CASCADE
@@ -198,7 +198,7 @@ CREATE TABLE ExaminerEvaluateDefense(
     date DATETIME ,
     serialNo INT ,
     examinerId INT ,
-    comment VARCHAR(50), 
+    comment VARCHAR(300), 
     PRIMARY KEY(date,serialNo,examinerId),
     FOREIGN KEY (serialNo , date) REFERENCES Defense ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (examinerId) REFERENCES Examiner ON DELETE CASCADE ON UPDATE CASCADE 
@@ -211,6 +211,9 @@ CREATE TABLE ThesisHasPublication(
     FOREIGN KEY (serialNo) REFERENCES Thesis ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (pubid) REFERENCES Publication ON DELETE CASCADE ON UPDATE CASCADE
 );
+create unique index indunique 
+on thesis (payment_id)
+where payment_id is not null
 --USE master; ALTER DATABASE [Milestone2] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [Milestone2] ;--
 
 

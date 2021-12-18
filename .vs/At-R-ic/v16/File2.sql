@@ -229,19 +229,17 @@ Declare @newamo decimal(10,1)
 set @newamo = @amo/@num
 declare @enddate date 
 set @enddate=@InstallStartDate
-declare @curr date
+--declare @curr date--
 --SELECT @curr=CAST( GETDATE() AS Date ) ;--
 
-select @curr=th.endDate
+/*select @curr=th.endDate
 from Thesis th 
-where th.payment_id=@paymentID
-
+where th.payment_id=@paymentID*/
 declare @co int
 set @co=0
-while (@curr >= @enddate and @co<@num )
+while (@co<@num )
 begin
 insert into Installment values(@enddate,@paymentID,@newamo,0)
-
 SET @enddate = DATEADD(MONTH, 6, @enddate)
 set @co = @co+1
 end 
@@ -459,7 +457,7 @@ go
 create proc AddExaminer 
 @ThesisSerialNo int , @DefenseDate Datetime , @ExaminerName varchar(20), @National bit, @fieldOfWork varchar(20)
 as
-insert into PostGradUser (email  ,password )values (@ExaminerName+'@gmail.com',@ExaminerName+'gg')
+insert into PostGradUser (email  ,password )values (null,null)
 Declare @temp int 
 select @temp= id from PostGradUser where id = @@IDENTITY
 insert into Examiner(id , name ,fieldofwork , isNational ) values (@temp , @ExaminerName , @fieldOfWork , @National)
@@ -496,8 +494,7 @@ else print 'invalid thesis serial number'
 go
 --//whether it is defence grade--
 Create proc AddGrade
-@ThesisSerialNo int ,
-@grade decimal(5,2)
+@ThesisSerialNo int 
 as 
 if exists (select * from Thesis where serialNumber=@ThesisSerialNo)
 begin
@@ -506,7 +503,7 @@ select @ggrade= c.grade
 from Defense c 
 where c.serialNumber = @ThesisSerialNo */
 update Thesis 
-set grade =@grade
+set grade =78.5
 where serialNumber = @ThesisSerialNo
 end 
 else print 'invalid thesis serial number' 
@@ -588,12 +585,11 @@ create proc ViewCoursesGrades
 as 
 if exists (select * from NonGucianStudent where id=@studentID)
 begin
-select C.cid as cousrse_id, C.grade as course_grade 
-from NonGucianStudentTakeCourse C 
+select C.cid as cousrse_id,S.code, C.grade as course_grade 
+from NonGucianStudentTakeCourse C inner join Course S on C.cid = S.id
 where C.sid = @studentID
 end
 else print 'invalid id number'
-
 --6) e) View all my payments and installments --
 go
 create proc ViewCoursePaymentsInstall 
@@ -601,34 +597,42 @@ create proc ViewCoursePaymentsInstall
 as
 if exists (select * from NonGucianStudent where id=@studentID)
 begin
-select p.* , I.*
+select p.* 
+from NonGucianStudentPayForCourse N inner join Payment p on N.paymentNo = p.id 
+inner join Installment I on p.id = I.paymentId
+where N.sid = @studentID
+select I.* 
 from NonGucianStudentPayForCourse N inner join Payment p on N.paymentNo = p.id 
 inner join Installment I on p.id = I.paymentId
 where N.sid = @studentID
 end
 else print 'invalid id number'
-
 go
 create proc ViewThesisPaymentsInstall 
 @studentID int
 as 
 if exists ( select * from GucianStudent s where @studentId = s.id )
 begin
-select p.* , I.*
+select p.*
+from GUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
+where gs.sid=@studentID
+select I.* 
 from GUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
 inner join Installment I on p.id = I.paymentId
 where gs.sid=@studentID
 end 
 else if exists ( select * from NonGucianStudent s where @studentId = s.id )
 begin
-select p.* , I.*
+select p.* 
+from NonGUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
+where gs.sid=@studentID
+select I.* 
 from NonGUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
 inner join Installment I on p.id = I.paymentId
 where gs.sid=@studentID
 end
 else 
 print 'invalid id number'
-
 go
 create proc ViewUpcomingInstallments 
 @studentID int
@@ -640,14 +644,19 @@ begin
 select I.*
 from GUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
 inner join Installment I on p.id = I.paymentId
-where gs.sid=@studentID and I.date > @curr
+where gs.sid=@studentID and I.date > @curr and I.done = '0'
 end 
 else if exists ( select * from NonGucianStudent s where @studentId = s.id )
 begin
 select I.*
 from NonGUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
 inner join Installment I on p.id = I.paymentId
-where gs.sid=@studentID and I.date > @curr
+where gs.sid=@studentID and I.date > @curr and  I.done = '0'
+union 
+select I.*
+from NonGucianStudentPayForCourse C inner join Payment p on C.paymentNo = p.id 
+inner join Installment I on p.id = I.paymentId
+where C.sid=@studentID and I.date > @curr and  I.done = '0'
 end
 else 
 print 'invalid id number'
@@ -672,6 +681,11 @@ select I.*
 from NonGUCianStudentRegisterThesis gs inner join Thesis T on gs.serial_no=t.serialNumber inner join Payment p on T.payment_id = p.id 
 inner join Installment I on p.id = I.paymentId
 where gs.sid=@studentID and I.date < @curr and I.done='0' 
+union
+select I.*
+from NonGucianStudentPayForCourse C inner join Payment p on C.paymentNo = p.id 
+inner join Installment I on p.id = I.paymentId
+where C.sid=@studentID and I.date < @curr and I.done='0' 
 end
 else 
 print 'invalid id number'
@@ -687,36 +701,37 @@ begin
 declare @sup_id INT 
 declare @student_id int
 declare @no int
+declare @sup_id1 INT 
+declare @student_id1 int
+declare @no1 int
 
 
 select @sup_id = N.supid , @student_id =N.sid
 from Thesis T inner join GUCianStudentRegisterThesis N on T.serialNumber=N.serial_no 
 where N.serial_no = @thesisSerialNo 
 
-select @sup_id = N.supid , @student_id =N.sid
-from Thesis T inner join NonGUCianProgressReport N on T.serialNumber=N.thesisSerialNumber
-where N.thesisSerialNumber = @thesisSerialNo 
+select @sup_id1 = N.supid , @student_id1 =N.sid
+from Thesis T inner join NonGUCianStudentRegisterThesis N on T.serialNumber=N.serial_no
+where N.serial_no = @thesisSerialNo 
 
-select @no =COUNT(*)
+select @no =COUNT(*)+1
 from GUCianProgressReport
 where sid=@student_id
 
-select @no =COUNT(*)
+select @no1 =COUNT(*)+1
 from NonGUCianProgressReport
-where sid=@student_id
+where sid=@student_id1
 
 
-if exists ( select * from NonGucianStudent s where @student_id = s.id )
+if exists ( select * from NonGucianStudent s where @student_id1 = s.id )
 insert into NonGUCianProgressReport (sid ,no ,date , thesisSerialNumber ,supid ) values 
-(@student_id , @no , @progressReportDate ,@thesisSerialNo ,@sup_id)
+(@student_id1 , @no1 , @progressReportDate ,@thesisSerialNo ,@sup_id1)
 
 else if exists ( select * from GucianStudent s where @student_id = s.id )
 insert into GUCianProgressReport (sid ,no ,date , thesisSerialNumber ,supid ) values 
 (@student_id , @no , @progressReportDate ,@thesisSerialNo ,@sup_id)
 end
 else print 'invalid thesis serial number and date'
-
-
 go 
 
 create proc FillProgressReport
